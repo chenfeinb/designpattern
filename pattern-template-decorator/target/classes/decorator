@@ -1,0 +1,21 @@
+装饰器模式（Decorator）：
+
+应用场景：
+在我们的项目中遇到这样一个问题：我们的项目需要连接多个数据库，而且不同的客户在每次访问中根据需要会去访问不同的数据库。我们以往在Spring 和Hibernate 框架中总是配置一个数据源，因而SessionFactory 的DataSource 属性总是指向这个数据源并且恒定不变，所有DAO 在使用
+SessionFactory 的时候都是通过这个数据源访问数据库。但是现在，由于项目的需要，我们的DAO 在访问SessionFactory 的时候都不得不在多个数据源中不断切换，
+问题就出现了： 如何让SessionFactory 在执行数据持久化的时候，根据客户的需求能够动态切换不同的数据源？我们能不能在Spring 的框架下通过少量修改得到解决？是否有什么设计模式可以利用呢？首先想到在Spring 的ApplicationContext 中配置所有的DataSource。这些DataSource 可能是各
+种不同类型的，比如不同的数据库：Oracle、SQL Server、MySQL 等，也可能是不同的数据源：Apache 提供的org.apache.commons.dbcp.BasicDataSource 、Spring 提供的
+org.springframework.jndi.JndiObjectFactoryBean 等。然后SessionFactory 根据客户的每次
+请求，将DataSource 属性设置成不同的数据源，以到达切换数据源的目的。
+Spring 中用到的包装器模式在类名上有两种表现：一种是类名中含有Wrapper，另一种是类名中含有
+Decorator。基本上都是动态地给一个对象添加一些额外的职责。
+
+归类：结构型模式
+
+特点：
+1、注重覆盖、扩展。
+2、装饰器和被装饰器都实现同一个接口，主要目的是为了扩展之后依旧保留OOP 关系（同宗同源）。
+3、满足is-a 的关系。
+IS-A表示继承。父类与子类，具有很高的耦合度。
+USE-A表示依赖。依然是其中一个拥有另外一个，但是不负责销毁，也就是声明周期不一样。
+穷举：IO 流包装、数据源包装、简历包装
